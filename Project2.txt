@@ -1,0 +1,55 @@
+Project 2 :
+
+npm init -y
+npm i express nodemon
+
+create a file named as server.js and create a folder named as static
+Inside static folder there'll be app.json and cool.txt and a jpg image files 
+
+app.json :
+{
+   'app'  : 'Middleware App',
+ 'version': "1.0"
+}
+
+
+server.js :
+
+const express = require('express');
+const path    = require('path');
+const fs      = require('fs');
+
+const app     = express();
+
+const PORT    = process.env.PORT || 3000;
+
+app.use((req,res,next)=>{
+  console.log('Requested Date:', new Data());
+  res.end or res.send or res.sendFile to end the request or just simply add instead of this all
+  next();
+})
+
+app.use((req,res,next)=>{
+  const filepath = path.join(__dirname,"static",req.url)
+  fs.stat(filepath,(err,fileinfo)=>{
+  if(err){
+  next();
+  return;
+  }
+  else if (fileinfo.isFile()){
+  res.sendFile(filepath)
+  }
+  else{
+  next()
+  }
+ })
+})
+
+  // 404 Middleware handler, This middleware will always stay on the last of the middlewares
+
+  app.use((req,res)=>{
+  res.status(404);
+  res.send('File Not Found')
+  })
+
+app.listen(PORT,()=>{console.log(`The server is running on ${PORT}`)});
